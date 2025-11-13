@@ -1,17 +1,31 @@
 import fp from "fastify-plugin";
-import type {} from "fastify";
+import { onRoute } from "#hook";
+import { createOpenapi } from "#openapi";
+import { routesSymbol } from "#symbol";
+import type { OpenAPIV3_1 as OpenApi } from "openapi-types";
+import type { OpenAPIBaseSchema } from "./openapi/prepare-base-schema.js";
 
 
-export type TemplatePluginOptions = {
-  value: string;
+export type OpenAPIPluginOptions = {
+  exposeHeadRoutes?: boolean;
+  hiddenTag?: string;
+  hideUntagged?: boolean;
+  openapi: OpenAPIBaseSchema;
 };
 
-export const name = "@jafps/plugin-template";
+export const name = "@jafps/plugin-openapi";
 
-export default fp<TemplatePluginOptions>(
+export default fp<OpenAPIPluginOptions>(
   async (app, opts) => {
-    const { value } = opts;
-    app.decorate("hello", () => value);
+    const {
+      exposeHeadRoutes = false,
+      hiddenTag = "X-HIDDEN",
+      hideUntagged = false,
+      openapi
+    } = opts;
+    app.decorate(routesSymbol, []);
+    app.addHook("onRoute", onRoute({ exposeHeadRoutes }));
+    app.decorate("openapi", createOpenapi(openapi, { hiddenTag, hideUntagged }));
   },
   {
     decorators: {},
@@ -22,7 +36,39 @@ export default fp<TemplatePluginOptions>(
 );
 
 declare module "fastify" {
+  interface FastifyContextConfig {
+    openapi?: {
+      exposeHeadRoute?: boolean;
+    };
+  }
+
   interface FastifyInstance {
-    readonly hello: () => string;
+    openapi: () => OpenApi.Document;
+    [routesSymbol]: RouteOptions[];
+  }
+
+  interface FastifySchema {
+    consumes?: readonly string[];
+    cookies?: unknown;
+    deprecated?: boolean;
+    description?: string;
+    externalDocs?: OpenApi.ExternalDocumentationObject;
+    hide?: boolean;
+
+    /**
+     * OpenAPI operation unique identifier
+     */
+    operationId?: string;
+    produces?: readonly string[];
+    security?: OpenApi.SecurityRequirementObject[];
+    summary?: string;
+    tags?: string[];
+  }
+}
+
+declare module "typebox" {
+  export interface TSchemaOptions {
+    deprecated?: boolean;
+    explode?: boolean;
   }
 }

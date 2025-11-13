@@ -1,9 +1,8 @@
 {
-  "name": "@jafps/plugin-template",
+  "name": "@jafps/plugin-openapi",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fastify plugin for generating OpenAPI 3.1 document.",
   "type": "module",
-  "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
@@ -14,13 +13,23 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jafpsjs/plugin-template.git"
+    "url": "git+https://github.com/jafpsjs/plugin-openapi.git"
   },
   "bugs": {
-    "url": "https://github.com/jafpsjs/plugin-template/issues"
+    "url": "https://github.com/jafpsjs/plugin-openapi/issues"
   },
-  "homepage": "https://github.com/jafpsjs/plugin-template#readme",
-  "imports": {},
+  "homepage": "https://github.com/jafpsjs/plugin-openapi#readme",
+  "imports": {
+    "#hook": {
+      "import": "./dist/hook/index.js"
+    },
+    "#openapi": {
+      "import": "./dist/openapi/index.js"
+    },
+    "#symbol": {
+      "import": "./dist/symbol.js"
+    }
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js"
@@ -35,7 +44,10 @@
     "!dist/**/__tests__/**/*"
   ],
   "devDependencies": {
+    "@jafps/plugin-error": "^1.0.0",
+    "@jafps/plugin-schema": "^1.0.0",
     "@joshuaavalon/eslint-config-typescript": "^10.0.0",
+    "@seriousme/openapi-schema-validator": "2.7.0",
     "@types/node": "^24.9.1",
     "eslint": "^9.38.0",
     "fastify": "^5.6.1",
@@ -44,6 +56,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "fastify-plugin": "^5.1.0"
+    "fastify-plugin": "^5.1.0",
+    "openapi-types": "^12.1.3",
+    "typebox": "^1.0.43"
   }
 }
