@@ -55,7 +55,6 @@ function prepareSchemaOperation(routeSchema: FastifySchema | undefined): OpenApi
 }
 
 type CreateOpenApiOptions = {
-  hiddenTag: string;
   hideUntagged: boolean;
 };
 

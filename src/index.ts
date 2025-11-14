@@ -8,7 +8,6 @@ import type { OpenAPIBaseSchema } from "./openapi/prepare-base-schema.js";
 
 export type OpenAPIPluginOptions = {
   exposeHeadRoutes?: boolean;
-  hiddenTag?: string;
   hideUntagged?: boolean;
   openapi: OpenAPIBaseSchema;
 };
@@ -19,13 +18,12 @@ export default fp<OpenAPIPluginOptions>(
   async (app, opts) => {
     const {
       exposeHeadRoutes = false,
-      hiddenTag = "X-HIDDEN",
       hideUntagged = false,
       openapi
     } = opts;
     app.decorate(routesSymbol, []);
     app.addHook("onRoute", onRoute({ exposeHeadRoutes }));
-    app.decorate("openapi", createOpenapi(openapi, { hiddenTag, hideUntagged }));
+    app.decorate("openapi", createOpenapi(openapi, { hideUntagged }));
   },
   {
     decorators: {},
