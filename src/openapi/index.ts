@@ -1,59 +1,10 @@
-import { routesSymbol } from "#symbol";
-import { mapParameters } from "./map-parameters.js";
+import { jsonSymbol, readySymbol, routesSymbol } from "#symbol";
 import { prepareBaseSchema } from "./prepare-base-schema.js";
+import { prepareSchemaOperation } from "./prepare-schema-operation.js";
 import { shouldRouteHide } from "./should-route-hidden.js";
-import { statuses } from "./status.js";
-import { updateReferences } from "./update-references.js";
-import type { FastifyInstance, FastifySchema } from "fastify";
+import type { FastifyInstance } from "fastify";
 import type { OpenAPIV3_1 as OpenApi } from "openapi-types";
 import type { OpenAPIBaseSchema } from "./prepare-base-schema.js";
-
-
-function prepareSchemaOperation(routeSchema: FastifySchema | undefined): OpenApi.OperationObject {
-  const operation: OpenApi.OperationObject = {};
-  if (!routeSchema) {
-    return operation;
-  }
-  const schema = JSON.parse(JSON.stringify(routeSchema, null, 2)) as FastifySchema;
-
-  operation.operationId = schema.operationId;
-  operation.summary = schema.summary;
-  operation.tags = schema.tags;
-  operation.description = schema.description;
-  operation.externalDocs = schema.externalDocs;
-  operation.parameters ??= [];
-  const consumes = schema.consumes ?? ["application/json"];
-  const produces = schema.produces ?? ["application/json"];
-  mapParameters(operation.parameters, { schema: schema.querystring, type: "query" });
-  mapParameters(operation.parameters, { schema: schema.params, type: "path" });
-  mapParameters(operation.parameters, { schema: schema.headers, type: "header" });
-  mapParameters(operation.parameters, { schema: schema.cookies, type: "cookie" });
-  if (schema.body) {
-    const paramSchema = schema.body;
-    updateReferences(paramSchema);
-    operation.requestBody ??= { content: {} };
-    if ("content" in operation.requestBody) {
-      for (const consume of consumes) {
-        operation.requestBody.content[consume] = { schema: paramSchema };
-      }
-    }
-  }
-  operation.deprecated = schema.deprecated;
-  operation.security = schema.security;
-  if (schema.response) {
-    operation.responses ??= { };
-    for (const [status, resSchema] of Object.entries(schema.response)) {
-      updateReferences(resSchema);
-      for (const produce of produces) {
-        operation.responses[status] = {
-          content: { [produce]: { schema: resSchema } },
-          description: resSchema.description ?? statuses[status as any] ?? "Default Response"
-        };
-      }
-    }
-  }
-  return operation;
-}
 
 /* node:coverage disable */
 type CreateOpenApiOptions = {
@@ -64,6 +15,12 @@ type CreateOpenApiOptions = {
 
 export function createOpenapi(openapi: OpenAPIBaseSchema, opts: CreateOpenApiOptions): (this: FastifyInstance) => OpenApi.Document {
   return function () {
+    if (!this[readySymbol]) {
+      throw new Error("openapi() can only be called after the application is ready.");
+    }
+    if (this[jsonSymbol]) {
+      return this[jsonSymbol];
+    }
     const baseDoc = prepareBaseSchema(this, openapi);
     baseDoc.paths ??= {};
     const routes = this[routesSymbol];
@@ -90,6 +47,7 @@ export function createOpenapi(openapi: OpenAPIBaseSchema, opts: CreateOpenApiOpt
       }
       baseDoc.paths[url] = schemaRoute;
     }
+    this[jsonSymbol] = baseDoc;
     return baseDoc;
   };
 }

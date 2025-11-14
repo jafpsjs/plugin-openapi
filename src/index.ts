@@ -1,7 +1,7 @@
 import fp from "fastify-plugin";
-import { onRoute } from "#hook";
+import { onReady, onRoute } from "#hook";
 import { createOpenapi } from "#openapi";
-import { routesSymbol } from "#symbol";
+import { jsonSymbol, readySymbol, routesSymbol } from "#symbol";
 import type { OpenAPIV3_1 as OpenApi } from "openapi-types";
 import type { OpenAPIBaseSchema } from "./openapi/prepare-base-schema.js";
 
@@ -41,7 +41,10 @@ export default fp<OpenAPIPluginOptions>(
       openapi
     } = opts;
     app.decorate(routesSymbol, []);
+    app.decorate(readySymbol, false);
+    app.decorate(jsonSymbol, null);
     app.addHook("onRoute", onRoute({ exposeHeadRoutes }));
+    app.addHook("onReady", onReady);
     app.decorate("openapi", createOpenapi(openapi, { hideUntagged }));
   },
   {
@@ -73,7 +76,9 @@ declare module "fastify" {
   }
 
   interface FastifyInstance {
+    [jsonSymbol]: OpenApi.Document | null;
     openapi: () => OpenApi.Document;
+    [readySymbol]: boolean;
     [routesSymbol]: RouteOptions[];
   }
 

@@ -83,6 +83,8 @@ describe("@jafps/plugin-openapi", () => {
     }, async (_req, res) => {
       res.send({ success: true });
     });
+
+    await app.ready();
   });
 
   it("should produce valid OpenAPI", async () => {
@@ -113,6 +115,8 @@ describe("@jafps/plugin-openapi", () => {
     app.get("/hide", { schema: { response: { 200: Type.Object({ success: Type.Boolean() }) } } }, async (_req, res) => {
       res.send({ success: true });
     });
+
+    await app.ready();
     const json = app.openapi();
     assert.ok(!json.paths?.["/hide"]);
   });
@@ -130,6 +134,8 @@ describe("@jafps/plugin-openapi", () => {
     app.put("/no-schema", { }, async (_req, res) => {
       res.send({ success: true });
     });
+
+    await app.ready();
     const json = app.openapi();
     assert.ok(json.paths?.["/no-schema"]);
   });
