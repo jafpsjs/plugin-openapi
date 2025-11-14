@@ -68,10 +68,8 @@ describe("@jafps/plugin-openapi", () => {
     });
 
     app.get("/hide", {
-      schema: {
-        hide: true,
-        response: { 200: Type.Object({ success: Type.Boolean() }) }
-      }
+      config: { openapi: { hide: true } },
+      schema: { response: { 200: Type.Object({ success: Type.Boolean() }) } }
     }, async (_req, res) => {
       res.send({ success: true });
     });

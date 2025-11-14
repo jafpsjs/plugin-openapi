@@ -13,6 +13,9 @@ export function onRoute(opts: OnRouteOptions): onRouteHookHandler {
     if (routeOptions.method === "HEAD" && !exposeHeadRoutes && openapiConfig.exposeHeadRoute !== true) {
       return;
     }
+    if (openapiConfig.hide) {
+      return;
+    }
     if (
       routeOptions.method === "HEAD"
       && routeOptions.schema?.operationId !== undefined
