@@ -55,14 +55,16 @@ function prepareSchemaOperation(routeSchema: FastifySchema | undefined): OpenApi
   return operation;
 }
 
+/* node:coverage disable */
 type CreateOpenApiOptions = {
   hideUntagged: boolean;
 };
 
+/* node:coverage enable */
+
 export function createOpenapi(openapi: OpenAPIBaseSchema, opts: CreateOpenApiOptions): (this: FastifyInstance) => OpenApi.Document {
   return function () {
     const baseDoc = prepareBaseSchema(this, openapi);
-    // TODO: Check Ready
     baseDoc.paths ??= {};
     const routes = this[routesSymbol];
     for (const route of routes) {
@@ -70,7 +72,6 @@ export function createOpenapi(openapi: OpenAPIBaseSchema, opts: CreateOpenApiOpt
       if (shouldRouteHide(schema, opts)) {
         continue;
       }
-
       const schemaRoute = { ...baseDoc.paths[url] };
       const methods = typeof route.method === "string" ? [route.method] : route.method;
       const operation = prepareSchemaOperation(schema);

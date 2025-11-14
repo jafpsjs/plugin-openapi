@@ -1,8 +1,11 @@
 import type { FastifySchema } from "fastify";
 
+/* node:coverage disable */
 type ShouldRouteHideOptions = {
   hideUntagged: boolean;
 };
+
+/* node:coverage enable */
 
 export function shouldRouteHide(schema: FastifySchema | undefined, opts: ShouldRouteHideOptions): boolean {
   const { hideUntagged } = opts;

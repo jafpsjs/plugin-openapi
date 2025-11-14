@@ -74,7 +74,6 @@ describe("@jafps/plugin-openapi", () => {
       res.send({ success: true });
     });
 
-
     app.head("/head", {
       config: { openapi: { exposeHeadRoute: true } },
       schema: {
@@ -96,6 +95,43 @@ describe("@jafps/plugin-openapi", () => {
   it("should hide route", async () => {
     const json = app.openapi();
     assert.ok(!json.paths?.["/hide"]);
+  });
+
+  it("should hide untagged route", async () => {
+    const app = await fastify();
+    await app.register(errorPlugin);
+    await app.register(schemaPlugin);
+    await app.register(openapiPlugin, {
+      hideUntagged: true,
+      openapi: {
+        info: {
+          title: "API",
+          version: "1.0.0"
+        }
+      }
+    });
+    app.get("/hide", { schema: { response: { 200: Type.Object({ success: Type.Boolean() }) } } }, async (_req, res) => {
+      res.send({ success: true });
+    });
+    const json = app.openapi();
+    assert.ok(!json.paths?.["/hide"]);
+  });
+
+  it("should support no schema route", async () => {
+    const app = await fastify();
+    await app.register(openapiPlugin, {
+      openapi: {
+        info: {
+          title: "API",
+          version: "1.0.0"
+        }
+      }
+    });
+    app.put("/no-schema", { }, async (_req, res) => {
+      res.send({ success: true });
+    });
+    const json = app.openapi();
+    assert.ok(json.paths?.["/no-schema"]);
   });
 
   it("should include head route", async () => {
