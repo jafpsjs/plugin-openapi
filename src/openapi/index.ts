@@ -23,6 +23,7 @@ function prepareSchemaOperation(routeSchema: FastifySchema | undefined): OpenApi
   operation.externalDocs = schema.externalDocs;
   operation.parameters ??= [];
   const consumes = schema.consumes ?? ["application/json"];
+  const produces = schema.produces ?? ["application/json"];
   mapParameters(operation.parameters, { schema: schema.querystring, type: "query" });
   mapParameters(operation.parameters, { schema: schema.params, type: "path" });
   mapParameters(operation.parameters, { schema: schema.headers, type: "header" });
@@ -43,9 +44,9 @@ function prepareSchemaOperation(routeSchema: FastifySchema | undefined): OpenApi
     operation.responses ??= { };
     for (const [status, resSchema] of Object.entries(schema.response)) {
       updateReferences(resSchema);
-      for (const consume of consumes) {
+      for (const produce of produces) {
         operation.responses[status] = {
-          content: { [consume]: { schema: resSchema } },
+          content: { [produce]: { schema: resSchema } },
           description: resSchema.description ?? statuses[status as any] ?? "Default Response"
         };
       }
