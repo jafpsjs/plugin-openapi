@@ -1,6 +1,6 @@
 {
   "name": "@jafps/plugin-openapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fastify plugin for generating OpenAPI 3.1 document.",
   "type": "module",
   "scripts": {
