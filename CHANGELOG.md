@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/jafpsjs/plugin-openapi/compare/v1.0.0...v1.0.1) (2025-11-28)
+
+
+### Bug Fixes
+
+* Migrate to pnpm ([869e049](https://github.com/jafpsjs/plugin-openapi/commit/869e049cd82023e3a3fce2dadf67d1f4edcede9c))
+
 ## 1.0.0 (2025-11-14)
 
 
