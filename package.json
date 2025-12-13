@@ -45,7 +45,7 @@
   ],
   "devDependencies": {
     "@jafps/plugin-error": "^1.0.1",
-    "@jafps/plugin-schema": "^1.1.1",
+    "@jafps/plugin-schema": "^1.2.1",
     "@joshuaavalon/eslint-config-javascript": "^10.0.0",
     "@joshuaavalon/eslint-config-typescript": "^10.0.0",
     "@seriousme/openapi-schema-validator": "^2.7.0",

@@ -11,7 +11,7 @@ export type OpenAPIBaseSchema = {
   /**
    * An element to hold various schemas for the document.
    *
-   * Global schemas from Fastify will be added to it by {@link FastifyInstance.getSchemas}.
+   * Global schemas from Fastify will be added to it by {@link FastifyInstance.schemas}.
    *
    * @see https://spec.openapis.org/oas/v3.1.0.html#components-object
    */
@@ -103,7 +103,7 @@ export type OpenAPIBaseSchema = {
 
 export function prepareBaseSchema(app: FastifyInstance, base: OpenAPIBaseSchema): OpenApi.Document {
   const { components = {}, externalDocs, info, jsonSchemaDialect, paths, security, servers, tags, webhooks } = base;
-  components.schemas ??= JSON.parse(JSON.stringify(app.getSchemas(), null, 2));
+  components.schemas ??= JSON.parse(JSON.stringify(app.schemas.getSchemas(), null, 2));
   if (components.schemas) {
     for (const [_key, schema] of Object.entries(components.schemas)) {
       if ("$id" in schema) {

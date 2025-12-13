@@ -22,8 +22,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
       '@jafps/plugin-schema':
-        specifier: ^1.1.1
-        version: 1.1.1
+        specifier: ^1.2.1
+        version: 1.2.1
       '@joshuaavalon/eslint-config-javascript':
         specifier: ^10.0.0
         version: 10.0.0(eslint@9.39.1)(typescript@5.9.3)
@@ -140,8 +140,8 @@ packages:
   '@jafps/plugin-error@1.0.1':
     resolution: {integrity: sha512-yZWDC82J7e4PTYW++p46LpbsgZOIC246vU30BiNspAgkYT7tUGtVwtq8XeazwFJZ7RUuimaGrn3AAjbcLJ+niw==}
 
-  '@jafps/plugin-schema@1.1.1':
-    resolution: {integrity: sha512-sA4I/Fj82raRffMN3b1BIIQpqOfpajPg5h3kwIeTuc3ttKT44c+CYntX4hoc6rTTjn+5TeI6Yh9nE1sMsuN3lw==}
+  '@jafps/plugin-schema@1.2.1':
+    resolution: {integrity: sha512-7NJ5ajgPXiiLB4OwqMwRhfzAUwMjPKdWdLBohbifri7vClEtnra1zH3dj5y1zu6sTcypYXeWfS9Y/n6uBoWD4A==}
 
   '@joshuaavalon/eslint-config-javascript@10.0.0':
     resolution: {integrity: sha512-stYz9iKmHeJP8RnzI6JeeM+td/0/QQKMyDpFPDqqvvgCPTdjSFiM3NfUYbsft+ZvlG+4q4FAAqoBSYkzs0+tNg==}
@@ -725,6 +725,9 @@ packages:
   typebox@1.0.58:
     resolution: {integrity: sha512-k5zPE5pTAjQRR6KLVn1C09ShIDyBpj2BETPtCFGQL1TFOTAMjLPf/IxE6vogMOdh2e0BJz1SoZ9YlfCEfcC+cw==}
 
+  typebox@1.0.62:
+    resolution: {integrity: sha512-iWxUfvzC5tGZWFrhoPLUKQJgFif4aDVgyaBbCURFIswex8to1JsnwDtenM2GqNI1VC/vqNlHtGc0ZR5eh0vbww==}
+
   typescript-eslint@8.48.0:
     resolution: {integrity: sha512-fcKOvQD9GUn3Xw63EgiDqhvWJ5jsyZUaekl3KVpGsDJnN46WJTe3jWxtQP9lMZm1LJNkFLlTaWAxK2vUQR+cqw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -849,10 +852,10 @@ snapshots:
       fastify-plugin: 5.1.0
       typebox: 1.0.58
 
-  '@jafps/plugin-schema@1.1.1':
+  '@jafps/plugin-schema@1.2.1':
     dependencies:
       fastify-plugin: 5.1.0
-      typebox: 1.0.58
+      typebox: 1.0.62
 
   '@joshuaavalon/eslint-config-javascript@10.0.0(eslint@9.39.1)(typescript@5.9.3)':
     dependencies:
@@ -1460,6 +1463,8 @@ snapshots:
       prelude-ls: 1.2.1
 
   typebox@1.0.58: {}
+
+  typebox@1.0.62: {}
 
   typescript-eslint@8.48.0(eslint@9.39.1)(typescript@5.9.3):
     dependencies:

@@ -49,7 +49,7 @@ export default fp<OpenAPIPluginOptions>(
   },
   {
     decorators: {},
-    dependencies: [],
+    dependencies: ["@jafps/plugin-schema"],
     fastify: "5.x",
     name
   }

@@ -39,8 +39,8 @@ describe("@jafps/plugin-openapi", () => {
         }
       }
     });
-    app.addSchema(Type.Options(Type.String(), { $id: "d", examples: ["a"] }));
-    app.addSchema(bodySchema);
+    app.schemas.addSchema(Type.Options(Type.String(), { $id: "d", examples: ["a"] }));
+    app.schemas.addSchema(bodySchema);
 
     app.post("/validate", {
       schema: {
@@ -123,6 +123,8 @@ describe("@jafps/plugin-openapi", () => {
 
   it("should support no schema route", async () => {
     const app = await fastify();
+    await app.register(errorPlugin);
+    await app.register(schemaPlugin);
     await app.register(openapiPlugin, {
       openapi: {
         info: {
