@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/jafpsjs/plugin-openapi/compare/v1.0.1...v1.1.0) (2025-12-13)
+
+
+### Features
+
+* Support latest @jafps/plugin-schema ([38419b4](https://github.com/jafpsjs/plugin-openapi/commit/38419b4ae371c96c3b198555dc99d99942416b4b))
+
 ## [1.0.1](https://github.com/jafpsjs/plugin-openapi/compare/v1.0.0...v1.0.1) (2025-11-28)
 
 
