@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/jafpsjs/plugin-openapi/compare/v1.1.0...v1.1.1) (2025-12-15)
+
+
+### Bug Fixes
+
+* Add TypeBox patch binary ([85fb7d2](https://github.com/jafpsjs/plugin-openapi/commit/85fb7d2e15dd9d68a9032b9b4775e998d385ec58))
+
 ## [1.1.0](https://github.com/jafpsjs/plugin-openapi/compare/v1.0.1...v1.1.0) (2025-12-13)
 
 
