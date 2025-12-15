@@ -109,6 +109,11 @@ export function prepareBaseSchema(app: FastifyInstance, base: OpenAPIBaseSchema)
       if ("$id" in schema) {
         delete schema.$id;
       }
+      // Workaround for TypeBox
+      // https://github.com/sinclairzx81/typebox/issues/1484
+      if ("format" in schema && schema.format === "binary" && !schema.type) {
+        schema.type = "string";
+      }
       updateReferences(schema);
     }
   }
