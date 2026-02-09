@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/jafpsjs/plugin-openapi/compare/v1.1.1...v1.2.0) (2026-02-09)
+
+
+### Features
+
+* Generate operationId from summary ([972f2a9](https://github.com/jafpsjs/plugin-openapi/commit/972f2a996207955b4f3c222140997ebe02bd2547))
+
+
+### Bug Fixes
+
+* path parameters to OpenAPI ([7e6cb3f](https://github.com/jafpsjs/plugin-openapi/commit/7e6cb3fc4b6f691d43f94e56dee87972fedf47d1))
+
 ## [1.1.1](https://github.com/jafpsjs/plugin-openapi/compare/v1.1.0...v1.1.1) (2025-12-15)
 
 
