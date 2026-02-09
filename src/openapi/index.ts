@@ -1,3 +1,4 @@
+import Slugger from "github-slugger";
 import { jsonSymbol, readySymbol, routesSymbol } from "#symbol";
 import { formatParamUrl } from "./format-param-url.js";
 import { prepareBaseSchema } from "./prepare-base-schema.js";
@@ -15,6 +16,7 @@ type CreateOpenApiOptions = {
 /* node:coverage enable */
 
 export function createOpenapi(openapi: OpenAPIBaseSchema, opts: CreateOpenApiOptions): (this: FastifyInstance) => OpenApi.Document {
+  const slugger = new Slugger();
   return function () {
     if (!this[readySymbol]) {
       throw new Error("openapi() can only be called after the application is ready.");
@@ -33,7 +35,7 @@ export function createOpenapi(openapi: OpenAPIBaseSchema, opts: CreateOpenApiOpt
       const url = formatParamUrl(route.url);
       const schemaRoute = { ...baseDoc.paths[url] };
       const methods = typeof route.method === "string" ? [route.method] : route.method;
-      const operation = prepareSchemaOperation(schema);
+      const operation = prepareSchemaOperation(schema, slugger);
       for (const method of methods) {
         const m = method.toLowerCase();
         switch (m) {
