@@ -1,4 +1,5 @@
 import { jsonSymbol, readySymbol, routesSymbol } from "#symbol";
+import { formatParamUrl } from "./format-param-url.js";
 import { prepareBaseSchema } from "./prepare-base-schema.js";
 import { prepareSchemaOperation } from "./prepare-schema-operation.js";
 import { shouldRouteHide } from "./should-route-hidden.js";
@@ -25,10 +26,11 @@ export function createOpenapi(openapi: OpenAPIBaseSchema, opts: CreateOpenApiOpt
     baseDoc.paths ??= {};
     const routes = this[routesSymbol];
     for (const route of routes) {
-      const { schema, url } = route;
+      const { schema } = route;
       if (shouldRouteHide(schema, opts)) {
         continue;
       }
+      const url = formatParamUrl(route.url);
       const schemaRoute = { ...baseDoc.paths[url] };
       const methods = typeof route.method === "string" ? [route.method] : route.method;
       const operation = prepareSchemaOperation(schema);
