@@ -1,5 +1,7 @@
 # @jafps/plugin-openapi
 
+[![NPM Version](https://img.shields.io/npm/v/%40jafps%2Fplugin-openapi)](https://www.npmjs.com/package/@jafps/plugin-openapi)
+
 Fastify plugin for generating OpenAPI 3.1 document.
 
 ## Usage
