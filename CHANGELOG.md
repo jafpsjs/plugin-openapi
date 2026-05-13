@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/jafpsjs/plugin-openapi/compare/v1.2.1...v1.2.2) (2026-05-13)
+
+
+### Bug Fixes
+
+* Update dependencies ([c1c6c1f](https://github.com/jafpsjs/plugin-openapi/commit/c1c6c1f2e932ee05713ed978f0bf66b38aa3d023))
+
 ## [1.2.1](https://github.com/jafpsjs/plugin-openapi/compare/v1.2.0...v1.2.1) (2026-03-05)
 
 
